@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -16,13 +17,13 @@ public class LearningProgressTrackerAppTests {
     @Mock
     private InputProvider inputProvider;
     private AutoCloseable closeable;
-
     private LearningProgressTrackerApp app;
 
     @BeforeEach
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        app = new LearningProgressTrackerApp(outputProvider, inputProvider);
+        UserInputHandler userInputHandler = new UserInputHandler(inputProvider, outputProvider);
+        app = new LearningProgressTrackerApp(outputProvider, userInputHandler);
     }
 
     @AfterEach
