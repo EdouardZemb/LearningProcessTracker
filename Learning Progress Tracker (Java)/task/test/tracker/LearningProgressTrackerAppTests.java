@@ -22,7 +22,8 @@ public class LearningProgressTrackerAppTests {
     @BeforeEach
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        UserInputHandler userInputHandler = new UserInputHandler(inputProvider, outputProvider);
+        CommandRegistry commandRegistry = new CommandRegistry(outputProvider);
+        UserInputHandler userInputHandler = new UserInputHandler(inputProvider, commandRegistry);
         app = new LearningProgressTrackerApp(outputProvider, userInputHandler);
     }
 
