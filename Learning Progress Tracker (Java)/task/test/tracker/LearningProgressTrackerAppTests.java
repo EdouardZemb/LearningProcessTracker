@@ -31,26 +31,13 @@ public class LearningProgressTrackerAppTests {
     }
 
     @Test
-    @DisplayName("LearningProgressTrackerApp run() should print the correct message")
-    public void learningProgressTrackerAppRun() {
-        // Redirect System.out to capture the output
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
+    @DisplayName("Exit command terminates the program")
+    void testExitCommandTerminatesProgram() {
+        when(inputProvider.getInput()).thenReturn("exit");
 
-        // Create an instance of LearningProgressTrackerApp
-        OutputProvider outputProvider = new ConsoleOutputProvider();
-        LearningProgressTrackerApp app = new LearningProgressTrackerApp(outputProvider);
-
-        // Call the run() method
         app.run();
 
-        // Restore the standard output
-        System.setOut(System.out);
-
-        // Verify the output
-        String expectedOutput = "Learning Progress Tracker";
-        String actualOutput = outputStream.toString().trim();
-        assertEquals(expectedOutput, actualOutput);
+        verify(outputProvider).print("Bye!");
     }
 
     @Test
