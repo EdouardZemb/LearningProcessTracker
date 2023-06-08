@@ -31,6 +31,17 @@ public class LearningProgressTrackerAppTests {
     }
 
     @Test
+    @DisplayName("Non-exit command does not terminate the program")
+    void testNonExitCommandDoesNotTerminateProgram() {
+        when(inputProvider.getInput()).thenReturn("non-exit command", "exit");
+
+        app.run();
+
+        verify(outputProvider, times(1)).print("Learning Progress Tracker");
+        verify(outputProvider, times(1)).print("Bye!");
+    }
+
+    @Test
     @DisplayName("Exit command terminates the program")
     void testExitCommandTerminatesProgram() {
         when(inputProvider.getInput()).thenReturn("exit");
