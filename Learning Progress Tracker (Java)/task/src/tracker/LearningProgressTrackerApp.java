@@ -1,26 +1,24 @@
 package tracker;
 
-import java.util.Scanner;
-
 public class LearningProgressTrackerApp {
     private final OutputProvider outputProvider;
+    private final InputProvider inputProvider;
 
-    public LearningProgressTrackerApp(OutputProvider outputProvider) {
+    public LearningProgressTrackerApp(OutputProvider outputProvider, InputProvider inputProvider) {
         this.outputProvider = outputProvider;
+        this.inputProvider = inputProvider;
     }
 
     public void run() {
         TitlePrinter titlePrinter = new TitlePrinter(outputProvider);
         titlePrinter.printTitle();
 
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (scanner.hasNextLine()) {
-                String next = scanner.next();
+        while (true) {
+            String input = inputProvider.getInput();
 
-                if (next.equals("exit")) {
-                    outputProvider.print("Bye!");
-                    System.exit(0);
-                }
+            if (input.equals("exit")) {
+                outputProvider.print("Bye!");
+                break;
             }
         }
     }
