@@ -8,6 +8,7 @@ public class LearningProgressTrackerApp {
     }
 
     public void run() {
-        outputProvider.print("Learning Progress Tracker");
+        TitlePrinter titlePrinter = new TitlePrinter(outputProvider);
+        titlePrinter.printTitle();
     }
 }
