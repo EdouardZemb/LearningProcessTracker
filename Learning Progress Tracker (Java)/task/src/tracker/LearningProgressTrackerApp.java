@@ -1,7 +1,13 @@
 package tracker;
 
 public class LearningProgressTrackerApp {
+    private final OutputProvider outputProvider;
+
+    public LearningProgressTrackerApp(OutputProvider outputProvider) {
+        this.outputProvider = outputProvider;
+    }
+
     public void run() {
-        System.out.println("Learning Progress Tracker");
+        outputProvider.print("Learning Progress Tracker");
     }
 }
