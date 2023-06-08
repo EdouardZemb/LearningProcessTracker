@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -21,13 +22,15 @@ public class UserInputHandlerTests {
     @BeforeEach
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        userInputHandler = new UserInputHandler(inputProvider, outputProvider);
+        CommandRegistry commandRegistry = new CommandRegistry(outputProvider);
+        userInputHandler = new UserInputHandler(inputProvider, commandRegistry);
     }
 
     @AfterEach
     void close() throws Exception {
         closeable.close();
     }
+
     @Test
     @DisplayName("handleUserInput() exits when 'exit' command is entered")
     void testHandleUserInputExitsWhenExitCommandEntered() {
