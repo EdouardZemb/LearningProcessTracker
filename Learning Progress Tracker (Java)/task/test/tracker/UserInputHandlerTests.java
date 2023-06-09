@@ -41,4 +41,16 @@ public class UserInputHandlerTests {
         verify(outputProvider).print("Bye!");
         verify(inputProvider, times(3)).getInput();
     }
+
+    @Test
+    @DisplayName("handleUserInput() prints 'No input.' when blank input is entered")
+    void testHandleUserInputPrintsNoInputForBlankInput() {
+        when(inputProvider.getInput()).thenReturn("", "exit");
+
+        userInputHandler.handleUserInput();
+
+        verify(outputProvider).print("No input.");
+        verify(outputProvider).print("Bye!");
+        verify(inputProvider, times(2)).getInput();
+    }
 }
