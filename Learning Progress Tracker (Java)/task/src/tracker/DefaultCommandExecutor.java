@@ -17,7 +17,7 @@ public class DefaultCommandExecutor implements CommandExecutor {
     }
 
     @Override
-    public void handleUnrecognizedCommand(String input) {
-        // To be implemented in the next stage
+    public void handleUnrecognizedCommand() {
+        outputProvider.print("Error: unknown command!");
     }
 }

@@ -5,5 +5,5 @@ public interface CommandExecutor {
 
     void executeCommand(Command command) throws ExitProgramException;
 
-    void handleUnrecognizedCommand(String input);
+    void handleUnrecognizedCommand();
 }
