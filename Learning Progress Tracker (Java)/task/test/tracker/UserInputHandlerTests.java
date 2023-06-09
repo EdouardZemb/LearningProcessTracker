@@ -23,7 +23,7 @@ public class UserInputHandlerTests {
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
         CommandRegistry commandRegistry = new CommandRegistry(outputProvider);
-        userInputHandler = new UserInputHandler(inputProvider, commandRegistry);
+        userInputHandler = new UserInputHandler(inputProvider, commandRegistry, outputProvider);
     }
 
     @AfterEach

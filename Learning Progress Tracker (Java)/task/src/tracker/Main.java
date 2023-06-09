@@ -5,7 +5,7 @@ public class Main {
         OutputProvider outputProvider = new ConsoleOutputProvider();
         InputProvider inputProvider = new SystemInputProvider();
         CommandRegistry commandRegistry = new CommandRegistry(outputProvider);
-        UserInputHandler userInputHandler = new UserInputHandler(inputProvider, commandRegistry);
+        UserInputHandler userInputHandler = new UserInputHandler(inputProvider, commandRegistry, outputProvider);
         LearningProgressTrackerApp app = new LearningProgressTrackerApp(outputProvider, userInputHandler);
 
         app.run();
