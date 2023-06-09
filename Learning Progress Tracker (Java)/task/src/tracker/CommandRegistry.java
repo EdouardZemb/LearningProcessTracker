@@ -15,6 +15,7 @@ public class CommandRegistry {
 
     private void initializeCommands() {
         commandRegistry.put("exit", new ExitCommand(outputProvider));
+        commandRegistry.put("add student", new AddStudentCommand(outputProvider));
         // Add other commands to the registry as needed
     }
 
