@@ -15,8 +15,11 @@ public class UserInputHandler {
 
             Command command = commandRegistry.getCommand(input);
             if (command != null) {
-                command.execute();
-                break;
+                try {
+                    command.execute();
+                } catch (ExitProgramException e) {
+                    break;
+                }
             }
 
             // Handle unrecognized commands if needed
