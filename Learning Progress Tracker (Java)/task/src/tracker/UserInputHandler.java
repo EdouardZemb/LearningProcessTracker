@@ -28,7 +28,7 @@ public class UserInputHandler {
                     break;
                 }
             } else {
-                commandExecutor.handleUnrecognizedCommand(input);
+                commandExecutor.handleUnrecognizedCommand();
             }
         }
     }

@@ -43,4 +43,12 @@ public class DefaultCommandExecutorTests {
 
         verify(outputProvider).print("No input.");
     }
+
+    @Test
+    @DisplayName("executeCommand() handles unrecognized command")
+    void testExecuteCommandHandlesUnrecognizedCommand() {
+        commandExecutor.handleUnrecognizedCommand();
+
+        verify(outputProvider).print("Error: unknown command!");
+    }
 }
