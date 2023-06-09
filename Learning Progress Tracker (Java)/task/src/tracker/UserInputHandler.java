@@ -3,12 +3,12 @@ package tracker;
 public class UserInputHandler {
     private final InputProvider inputProvider;
     private final CommandRegistry commandRegistry;
-    private final OutputProvider outputProvider;
+    private final CommandExecutor commandExecutor;
 
-    public UserInputHandler(InputProvider inputProvider, CommandRegistry commandRegistry, OutputProvider outputProvider) {
+    public UserInputHandler(InputProvider inputProvider, CommandRegistry commandRegistry, CommandExecutor commandExecutor) {
         this.inputProvider = inputProvider;
         this.commandRegistry = commandRegistry;
-        this.outputProvider = outputProvider;
+        this.commandExecutor = commandExecutor;
     }
 
     public void handleUserInput() {
@@ -16,20 +16,20 @@ public class UserInputHandler {
             String input = inputProvider.getInput();
 
             if (input.isBlank()) {
-                outputProvider.print("No input.");
+                commandExecutor.handleBlankInput();
                 continue;
             }
 
             Command command = commandRegistry.getCommand(input);
             if (command != null) {
                 try {
-                    command.execute();
+                    commandExecutor.executeCommand(command);
                 } catch (ExitProgramException e) {
                     break;
                 }
+            } else {
+                commandExecutor.handleUnrecognizedCommand(input);
             }
-
-            // Handle unrecognized commands if needed
         }
     }
 }

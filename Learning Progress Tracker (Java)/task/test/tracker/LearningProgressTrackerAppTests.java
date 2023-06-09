@@ -23,7 +23,8 @@ public class LearningProgressTrackerAppTests {
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
         CommandRegistry commandRegistry = new CommandRegistry(outputProvider);
-        UserInputHandler userInputHandler = new UserInputHandler(inputProvider, commandRegistry, outputProvider);
+        CommandExecutor commandExecutor = new DefaultCommandExecutor(outputProvider);
+        UserInputHandler userInputHandler = new UserInputHandler(inputProvider, commandRegistry, commandExecutor);
         app = new LearningProgressTrackerApp(outputProvider, userInputHandler);
     }
 
