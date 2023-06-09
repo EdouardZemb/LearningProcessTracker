@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 
 @DisplayName("CommandRegistry Tests")
 public class CommandRegistryTests {
@@ -43,5 +44,30 @@ public class CommandRegistryTests {
         Command command = commandRegistry.getCommand("unknown");
 
         assertNull(command);
+    }
+
+    @Test
+    @DisplayName("getCommand() returns AddStudentCommand for 'add student'")
+    void testGetCommandReturnsAddStudentCommand() {
+        Command command = commandRegistry.getCommand("add student");
+
+        assertNotNull(command);
+        assertTrue(command instanceof AddStudentCommand);
+    }
+
+    @Test
+    @DisplayName("getCommand() returns null for unrecognized command")
+    void testGetCommandReturnsNullForUnrecognizedCommand() {
+        Command command = commandRegistry.getCommand("invalid command");
+        assertNull(command);
+    }
+
+    @Test
+    @DisplayName("execute() prints 'Enter student name or 'back' to return' for AddStudentCommand")
+    void testExecutePrintsExpectedMessageForAddStudentCommand() {
+        Command addStudentCommand = new AddStudentCommand(outputProvider);
+        addStudentCommand.execute();
+
+        verify(outputProvider).print("Enter student name or 'back' to return");
     }
 }
