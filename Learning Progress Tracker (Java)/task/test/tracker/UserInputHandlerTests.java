@@ -23,7 +23,8 @@ public class UserInputHandlerTests {
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
         CommandRegistry commandRegistry = new CommandRegistry(outputProvider);
-        userInputHandler = new UserInputHandler(inputProvider, commandRegistry);
+        CommandExecutor commandExecutor = new DefaultCommandExecutor(outputProvider);
+        userInputHandler = new UserInputHandler(inputProvider, commandRegistry, commandExecutor);
     }
 
     @AfterEach
@@ -40,5 +41,17 @@ public class UserInputHandlerTests {
 
         verify(outputProvider).print("Bye!");
         verify(inputProvider, times(3)).getInput();
+    }
+
+    @Test
+    @DisplayName("handleUserInput() prints 'No input.' when blank input is entered")
+    void testHandleUserInputPrintsNoInputForBlankInput() {
+        when(inputProvider.getInput()).thenReturn("", "exit");
+
+        userInputHandler.handleUserInput();
+
+        verify(outputProvider).print("No input.");
+        verify(outputProvider).print("Bye!");
+        verify(inputProvider, times(2)).getInput();
     }
 }
