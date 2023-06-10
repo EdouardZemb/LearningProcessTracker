@@ -1,20 +1,25 @@
 package tracker;
 
 public class Main {
+    private final InputProvider inputProvider;
     private final OutputProvider outputProvider;
     private final CommandRegistry commandRegistry;
     private final LearningProgressTrackerApp app;
 
-    public Main(OutputProvider outputProvider,
+    public Main(InputProvider inputProvider, OutputProvider outputProvider,
                 CommandRegistry commandRegistry,
                 LearningProgressTrackerApp app) {
+        this.inputProvider = inputProvider;
         this.outputProvider = outputProvider;
         this.commandRegistry = commandRegistry;
         this.app = app;
     }
 
     private void registerCommands() {
-        Command addStudentCommand = new AddStudentCommand(outputProvider);
+        CommandRegistry addStudentCommandRegistry = new CommandRegistry();
+        CommandExecutor addStudentCommandExecutor = new DefaultCommandExecutor(outputProvider);
+        UserInputHandler addStudentUserInputHandler = new UserInputHandler(inputProvider, addStudentCommandRegistry, addStudentCommandExecutor);
+        Command addStudentCommand = new AddStudentCommand(outputProvider, addStudentUserInputHandler);
         Command exitCommand = new ExitCommand(outputProvider);
         addStudentCommand.register(commandRegistry);
         exitCommand.register(commandRegistry);
@@ -33,7 +38,7 @@ public class Main {
         UserInputHandler userInputHandler = new UserInputHandler(inputProvider, commandRegistry, commandExecutor);
         LearningProgressTrackerApp app = new LearningProgressTrackerApp(outputProvider, userInputHandler);
 
-        Main main = new Main(outputProvider, commandRegistry, app);
+        Main main = new Main(inputProvider, outputProvider, commandRegistry, app);
         main.run();
     }
 
