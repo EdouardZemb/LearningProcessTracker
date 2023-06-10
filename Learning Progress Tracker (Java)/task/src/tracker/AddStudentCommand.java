@@ -2,7 +2,7 @@ package tracker;
 
 public class AddStudentCommand extends Command{
     public AddStudentCommand(OutputProvider outputProvider) {
-        super(outputProvider);
+        super(outputProvider, "add student");
     }
 
     @Override

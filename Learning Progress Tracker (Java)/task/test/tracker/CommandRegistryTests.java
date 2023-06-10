@@ -21,7 +21,7 @@ public class CommandRegistryTests {
     @BeforeEach
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        commandRegistry = new CommandRegistry(outputProvider);
+        commandRegistry = new CommandRegistry();
     }
 
     @AfterEach
@@ -32,6 +32,7 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("getCommand() returns the correct command for a registered input")
     void testGetCommandReturnsCorrectCommandForRegisteredInput() {
+        commandRegistry.register("exit", new ExitCommand(outputProvider));
         Command command = commandRegistry.getCommand("exit");
 
         assertNotNull(command);
@@ -49,6 +50,7 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("getCommand() returns AddStudentCommand for 'add student'")
     void testGetCommandReturnsAddStudentCommand() {
+        commandRegistry.register("add student", new AddStudentCommand(outputProvider));
         Command command = commandRegistry.getCommand("add student");
 
         assertNotNull(command);
