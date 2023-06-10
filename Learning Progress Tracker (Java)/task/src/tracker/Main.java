@@ -23,8 +23,10 @@ public class Main {
         UserInputHandler addStudentUserInputHandler = new UserInputHandler(inputProvider, addStudentCommandRegistry, addStudentCommandExecutor);
         Command addStudentCommand = new AddStudentCommand(outputProvider, addStudentUserInputHandler);
         Command exitCommand = new ExitCommand(outputProvider);
+        Command UnhandledBackCommand = new UnhandledBackCommand(outputProvider);
         addStudentCommand.register(commandRegistry);
         exitCommand.register(commandRegistry);
+        UnhandledBackCommand.register(commandRegistry);
     }
 
     public void run() {
