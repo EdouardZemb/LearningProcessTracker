@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @DisplayName("CommandRegistry Tests")
@@ -50,7 +51,7 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("getCommand() returns AddStudentCommand for 'add student'")
     void testGetCommandReturnsAddStudentCommand() {
-        commandRegistry.register("add student", new AddStudentCommand(outputProvider));
+        commandRegistry.register("add student", new AddStudentCommand(outputProvider, null));
         Command command = commandRegistry.getCommand("add student");
 
         assertNotNull(command);
@@ -67,7 +68,8 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("execute() prints 'Enter student name or 'back' to return' for AddStudentCommand")
     void testExecutePrintsExpectedMessageForAddStudentCommand() {
-        Command addStudentCommand = new AddStudentCommand(outputProvider);
+        UserInputHandler userInputHandler = mock(UserInputHandler.class);
+        Command addStudentCommand = new AddStudentCommand(outputProvider, userInputHandler);
         addStudentCommand.execute();
 
         verify(outputProvider).print("Enter student name or 'back' to return");
