@@ -17,6 +17,8 @@ public class Main {
 
     private void registerCommands() {
         CommandRegistry addStudentCommandRegistry = new CommandRegistry();
+        Command backCommand = new BackCommand(outputProvider);
+        backCommand.register(addStudentCommandRegistry);
         CommandExecutor addStudentCommandExecutor = new DefaultCommandExecutor(outputProvider);
         UserInputHandler addStudentUserInputHandler = new UserInputHandler(inputProvider, addStudentCommandRegistry, addStudentCommandExecutor);
         Command addStudentCommand = new AddStudentCommand(outputProvider, addStudentUserInputHandler);
