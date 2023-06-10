@@ -1,6 +1,6 @@
 package tracker;
 
-public abstract class Command {
+public abstract class Command implements RegistrableCommand, ExecutableCommand {
 
     protected final OutputProvider outputProvider;
     protected final String commandName;
@@ -10,11 +10,13 @@ public abstract class Command {
         this.commandName = commandName;
     }
 
-    void execute() {
+    @Override
+    public void execute() {
         outputProvider.print("Default command");
     }
 
-    void register(CommandRegistry commandRegistry) {
+    @Override
+    public void register(CommandRegistry commandRegistry) {
         commandRegistry.register(commandName, this);
     }
 }
