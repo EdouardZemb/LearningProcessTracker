@@ -1,8 +1,9 @@
 package tracker;
 
-public class UnhandledBackCommand extends Command {
+public class UnhandledBackCommand extends BackCommand {
+
     public UnhandledBackCommand(OutputProvider outputProvider) {
-        super(outputProvider, "back");
+        super(outputProvider);
     }
 
     @Override
