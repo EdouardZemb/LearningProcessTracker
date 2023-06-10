@@ -11,11 +11,6 @@ public abstract class Command implements RegistrableCommand, ExecutableCommand {
     }
 
     @Override
-    public void execute() {
-        outputProvider.print("Default command");
-    }
-
-    @Override
     public void register(CommandRegistry commandRegistry) {
         commandRegistry.register(commandName, this);
     }
