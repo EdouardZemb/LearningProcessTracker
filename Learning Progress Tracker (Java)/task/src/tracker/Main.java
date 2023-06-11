@@ -1,15 +1,13 @@
 package tracker;
 
 public class Main {
-    private final InputProvider inputProvider;
     private final OutputProvider outputProvider;
     private final CommandRegistry commandRegistry;
     private final LearningProgressTrackerApp app;
 
-    public Main(InputProvider inputProvider, OutputProvider outputProvider,
+    public Main(OutputProvider outputProvider,
                 CommandRegistry commandRegistry,
                 LearningProgressTrackerApp app) {
-        this.inputProvider = inputProvider;
         this.outputProvider = outputProvider;
         this.commandRegistry = commandRegistry;
         this.app = app;
@@ -19,9 +17,7 @@ public class Main {
         CommandRegistry addStudentCommandRegistry = new CommandRegistry();
         Command backCommand = new BackCommand(outputProvider);
         backCommand.register(addStudentCommandRegistry);
-        CommandExecutor addStudentCommandExecutor = new DefaultCommandExecutor(outputProvider);
-        UserInputHandler addStudentUserInputHandler = new DefaultUserInputHandler(inputProvider, addStudentCommandRegistry, addStudentCommandExecutor);
-        Command addStudentCommand = new AddStudentCommand(outputProvider, addStudentUserInputHandler);
+        Command addStudentCommand = new AddStudentCommand(outputProvider);
         Command exitCommand = new ExitCommand(outputProvider);
         Command UnhandledBackCommand = new UnhandledBackCommand(outputProvider);
         addStudentCommand.register(commandRegistry);
@@ -42,7 +38,7 @@ public class Main {
         UserInputHandler defaultUserInputHandler = new DefaultUserInputHandler(inputProvider, commandRegistry, commandExecutor);
         LearningProgressTrackerApp app = new LearningProgressTrackerApp(outputProvider, defaultUserInputHandler);
 
-        Main main = new Main(inputProvider, outputProvider, commandRegistry, app);
+        Main main = new Main(outputProvider, commandRegistry, app);
         main.run();
     }
 
