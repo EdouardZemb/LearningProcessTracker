@@ -68,8 +68,8 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("execute() prints 'Enter student name or 'back' to return' for AddStudentCommand")
     void testExecutePrintsExpectedMessageForAddStudentCommand() {
-        UserInputHandler userInputHandler = mock(UserInputHandler.class);
-        Command addStudentCommand = new AddStudentCommand(outputProvider, userInputHandler);
+        DefaultUserInputHandler defaultUserInputHandler = mock(DefaultUserInputHandler.class);
+        Command addStudentCommand = new AddStudentCommand(outputProvider, defaultUserInputHandler);
         addStudentCommand.execute();
 
         verify(outputProvider).print("Enter student name or 'back' to return");

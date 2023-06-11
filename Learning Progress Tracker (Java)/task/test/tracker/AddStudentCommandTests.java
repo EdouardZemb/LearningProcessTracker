@@ -17,7 +17,7 @@ public class AddStudentCommandTests {
     private OutputProvider outputProvider;
 
     @Mock
-    private UserInputHandler userInputHandler;
+    private DefaultUserInputHandler defaultUserInputHandler;
     AutoCloseable closeable;
 
     @BeforeEach
@@ -33,11 +33,11 @@ public class AddStudentCommandTests {
     @Test
     @DisplayName("execute() prints the expected message and calls handleUserInput()")
     void testExecutePrintsExpectedMessageAndCallsHandleUserInput() {
-        AddStudentCommand addStudentCommand = new AddStudentCommand(outputProvider, userInputHandler);
+        AddStudentCommand addStudentCommand = new AddStudentCommand(outputProvider, defaultUserInputHandler);
         addStudentCommand.execute();
 
         verify(outputProvider).print("Enter student name or 'back' to return");
-        verify(userInputHandler).handleUserInput();
+        verify(defaultUserInputHandler).handleUserInput();
     }
 }
 

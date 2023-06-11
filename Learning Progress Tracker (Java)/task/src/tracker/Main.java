@@ -20,8 +20,8 @@ public class Main {
         Command backCommand = new BackCommand(outputProvider);
         backCommand.register(addStudentCommandRegistry);
         CommandExecutor addStudentCommandExecutor = new DefaultCommandExecutor(outputProvider);
-        UserInputHandler addStudentUserInputHandler = new UserInputHandler(inputProvider, addStudentCommandRegistry, addStudentCommandExecutor);
-        Command addStudentCommand = new AddStudentCommand(outputProvider, addStudentUserInputHandler);
+        DefaultUserInputHandler addStudentDefaultUserInputHandler = new DefaultUserInputHandler(inputProvider, addStudentCommandRegistry, addStudentCommandExecutor);
+        Command addStudentCommand = new AddStudentCommand(outputProvider, addStudentDefaultUserInputHandler);
         Command exitCommand = new ExitCommand(outputProvider);
         Command UnhandledBackCommand = new UnhandledBackCommand(outputProvider);
         addStudentCommand.register(commandRegistry);
@@ -39,8 +39,8 @@ public class Main {
         InputProvider inputProvider = createInputProvider();
         CommandRegistry commandRegistry = createCommandRegistry();
         CommandExecutor commandExecutor = new DefaultCommandExecutor(outputProvider);
-        UserInputHandler userInputHandler = new UserInputHandler(inputProvider, commandRegistry, commandExecutor);
-        LearningProgressTrackerApp app = new LearningProgressTrackerApp(outputProvider, userInputHandler);
+        DefaultUserInputHandler defaultUserInputHandler = new DefaultUserInputHandler(inputProvider, commandRegistry, commandExecutor);
+        LearningProgressTrackerApp app = new LearningProgressTrackerApp(outputProvider, defaultUserInputHandler);
 
         Main main = new Main(inputProvider, outputProvider, commandRegistry, app);
         main.run();

@@ -2,17 +2,17 @@ package tracker;
 
 public class LearningProgressTrackerApp {
     private final OutputProvider outputProvider;
-    private final UserInputHandler userInputHandler;
+    private final DefaultUserInputHandler defaultUserInputHandler;
 
-    public LearningProgressTrackerApp(OutputProvider outputProvider, UserInputHandler userInputHandler) {
+    public LearningProgressTrackerApp(OutputProvider outputProvider, DefaultUserInputHandler defaultUserInputHandler) {
         this.outputProvider = outputProvider;
-        this.userInputHandler = userInputHandler;
+        this.defaultUserInputHandler = defaultUserInputHandler;
     }
 
     public void run() {
         TitlePrinter titlePrinter = new TitlePrinter(outputProvider);
         titlePrinter.printTitle();
 
-        userInputHandler.handleUserInput();
+        defaultUserInputHandler.handleUserInput();
     }
 }
