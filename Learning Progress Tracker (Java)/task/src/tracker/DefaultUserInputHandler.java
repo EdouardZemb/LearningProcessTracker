@@ -1,6 +1,6 @@
 package tracker;
 
-public class DefaultUserInputHandler {
+public class DefaultUserInputHandler implements UserInputHandler {
     private final InputProvider inputProvider;
     private final CommandRegistry commandRegistry;
     private final CommandExecutor commandExecutor;
@@ -11,6 +11,7 @@ public class DefaultUserInputHandler {
         this.commandExecutor = commandExecutor;
     }
 
+    @Override
     public void handleUserInput() {
         while (true) {
             String input = inputProvider.getInput();
