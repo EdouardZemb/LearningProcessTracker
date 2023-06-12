@@ -9,8 +9,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @DisplayName("CommandRegistry Tests")
 public class CommandRegistryTests {
@@ -51,7 +50,7 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("getCommand() returns AddStudentCommand for 'add student'")
     void testGetCommandReturnsAddStudentCommand() {
-        commandRegistry.register("add student", new AddStudentCommand(outputProvider, null));
+        commandRegistry.register("add student", new AddStudentCommand(outputProvider));
         Command command = commandRegistry.getCommand("add student");
 
         assertNotNull(command);
@@ -66,12 +65,14 @@ public class CommandRegistryTests {
     }
 
     @Test
-    @DisplayName("execute() prints 'Enter student name or 'back' to return' for AddStudentCommand")
-    void testExecutePrintsExpectedMessageForAddStudentCommand() {
-        DefaultUserInputHandler defaultUserInputHandler = mock(DefaultUserInputHandler.class);
-        Command addStudentCommand = new AddStudentCommand(outputProvider, defaultUserInputHandler);
-        addStudentCommand.execute();
+    @DisplayName("execute() calls execute() method of AddStudentCommand")
+    void testExecuteCallsExecuteMethodOfAddStudentCommand() {
+        AddStudentCommand addStudentCommand = mock(AddStudentCommand.class);
+        commandRegistry.register("add student", addStudentCommand);
+        Command command = commandRegistry.getCommand("add student");
 
-        verify(outputProvider).print("Enter student name or 'back' to return");
+        command.execute();
+
+        verify(addStudentCommand).execute();
     }
 }
