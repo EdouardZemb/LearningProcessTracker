@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class AddStudentCommand extends Command{
+    private InputProvider inputProvider = new SystemInputProvider();
+
     public AddStudentCommand(OutputProvider outputProvider) {
         super(outputProvider, "add student");
     }
@@ -12,7 +14,6 @@ public class AddStudentCommand extends Command{
     @Override
     public void execute() {
         outputProvider.print("Enter student name or 'back' to return");
-        InputProvider inputProvider = new SystemInputProvider();
         String input;
         List<Student> studentList = new ArrayList<>();
 
@@ -57,6 +58,10 @@ public class AddStudentCommand extends Command{
             outputProvider.print("The student has been added");
         }
 
-        System.out.println("Total " + studentList.size() + " students have been added");
+        outputProvider.print("Total " + studentList.size() + " students have been added");
+    }
+
+    public void setInputProvider(InputProvider inputProvider) {
+        this.inputProvider = inputProvider;
     }
 }
