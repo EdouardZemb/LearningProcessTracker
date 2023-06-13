@@ -21,7 +21,7 @@ public class AddStudentCommandTests {
     @BeforeEach
     public void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        addStudentCommand = new AddStudentCommand(outputProvider);
+        addStudentCommand = new AddStudentCommand(outputProvider, inputProvider);
     }
 
     @AfterEach
@@ -35,8 +35,6 @@ public class AddStudentCommandTests {
         Mockito.when(inputProvider.getInput())
                 .thenReturn("John Doe john.doe@example.com")
                 .thenReturn("back");
-
-        addStudentCommand.setInputProvider(inputProvider);
 
         addStudentCommand.execute();
 
@@ -53,8 +51,6 @@ public class AddStudentCommandTests {
                 .thenReturn("Jane Smith jane.smith@example.com")
                 .thenReturn("back");
 
-        addStudentCommand.setInputProvider(inputProvider);
-
         addStudentCommand.execute();
 
         Mockito.verify(outputProvider, Mockito.times(2)).print("The student has been added");
@@ -68,8 +64,6 @@ public class AddStudentCommandTests {
                 .thenReturn("Invalid")
                 .thenReturn("John Doe john.doe@example.com")
                 .thenReturn("back");
-
-        addStudentCommand.setInputProvider(inputProvider);
 
         addStudentCommand.execute();
 

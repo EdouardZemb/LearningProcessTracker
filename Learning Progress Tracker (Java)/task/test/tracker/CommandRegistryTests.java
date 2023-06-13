@@ -15,6 +15,8 @@ import static org.mockito.Mockito.*;
 public class CommandRegistryTests {
     @Mock
     private OutputProvider outputProvider;
+    @Mock
+    private InputProvider inputProvider;
     private CommandRegistry commandRegistry;
     private AutoCloseable closeable;
 
@@ -50,7 +52,7 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("getCommand() returns AddStudentCommand for 'add student'")
     void testGetCommandReturnsAddStudentCommand() {
-        commandRegistry.register("add student", new AddStudentCommand(outputProvider));
+        commandRegistry.register("add student", new AddStudentCommand(outputProvider, inputProvider));
         Command command = commandRegistry.getCommand("add student");
 
         assertNotNull(command);
