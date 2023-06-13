@@ -1,23 +1,20 @@
 package tracker;
 
-public class DefaultUserInputHandler implements UserInputHandler {
-    private final InputProvider inputProvider;
-    private final CommandRegistry commandRegistry;
-    private final CommandExecutor commandExecutor;
+public class DefaultUserInputHandler extends AbstractUserInputHandler {
 
+    private final CommandRegistry commandRegistry;
     public DefaultUserInputHandler(InputProvider inputProvider, CommandRegistry commandRegistry, CommandExecutor commandExecutor) {
-        this.inputProvider = inputProvider;
+        super(inputProvider, commandExecutor);
         this.commandRegistry = commandRegistry;
-        this.commandExecutor = commandExecutor;
     }
 
     @Override
     public void handleUserInput() {
         while (true) {
-            String input = inputProvider.getInput();
+            String input = getInput();
 
             if (input.isBlank()) {
-                commandExecutor.handleBlankInput();
+                handleBlankInput();
                 continue;
             }
 
@@ -31,6 +28,8 @@ public class DefaultUserInputHandler implements UserInputHandler {
             } else {
                 commandExecutor.handleUnrecognizedCommand();
             }
+
+            handleUnrecognizedInput();
         }
     }
 }
