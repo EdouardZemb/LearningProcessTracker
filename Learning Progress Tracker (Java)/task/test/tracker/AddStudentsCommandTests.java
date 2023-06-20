@@ -9,19 +9,19 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 @DisplayName("AddStudentCommand Tests")
-public class AddStudentCommandTests {
+public class AddStudentsCommandTests {
 
     @Mock
     private OutputProvider outputProvider;
     @Mock
     private InputProvider inputProvider;
-    private AddStudentCommand addStudentCommand;
+    private AddStudentsCommand addStudentsCommand;
     AutoCloseable closeable;
 
     @BeforeEach
     public void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        addStudentCommand = new AddStudentCommand(outputProvider, inputProvider);
+        addStudentsCommand = new AddStudentsCommand(outputProvider, inputProvider);
     }
 
     @AfterEach
@@ -36,7 +36,7 @@ public class AddStudentCommandTests {
                 .thenReturn("John Doe john.doe@example.com")
                 .thenReturn("back");
 
-        addStudentCommand.execute();
+        addStudentsCommand.execute();
 
         Mockito.verify(outputProvider).print("Enter student name or 'back' to return");
         Mockito.verify(outputProvider).print("The student has been added");
@@ -51,7 +51,7 @@ public class AddStudentCommandTests {
                 .thenReturn("Jane Smith jane.smith@example.com")
                 .thenReturn("back");
 
-        addStudentCommand.execute();
+        addStudentsCommand.execute();
 
         Mockito.verify(outputProvider, Mockito.times(2)).print("The student has been added");
         Mockito.verify(outputProvider).print("Total 2 students have been added");
@@ -65,7 +65,7 @@ public class AddStudentCommandTests {
                 .thenReturn("John Doe john.doe@example.com")
                 .thenReturn("back");
 
-        addStudentCommand.execute();
+        addStudentsCommand.execute();
 
         Mockito.verify(outputProvider).print("Enter student name or 'back' to return");
         Mockito.verify(outputProvider).print("Incorrect credentials");

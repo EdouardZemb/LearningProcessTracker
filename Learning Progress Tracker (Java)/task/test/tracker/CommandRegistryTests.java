@@ -52,11 +52,11 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("getCommand() returns AddStudentCommand for 'add student'")
     void testGetCommandReturnsAddStudentCommand() {
-        commandRegistry.register("add student", new AddStudentCommand(outputProvider, inputProvider));
+        commandRegistry.register("add student", new AddStudentsCommand(outputProvider, inputProvider));
         Command command = commandRegistry.getCommand("add student");
 
         assertNotNull(command);
-        assertTrue(command instanceof AddStudentCommand);
+        assertTrue(command instanceof AddStudentsCommand);
     }
 
     @Test
@@ -69,12 +69,12 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("execute() calls execute() method of AddStudentCommand")
     void testExecuteCallsExecuteMethodOfAddStudentCommand() {
-        AddStudentCommand addStudentCommand = mock(AddStudentCommand.class);
-        commandRegistry.register("add student", addStudentCommand);
+        AddStudentsCommand addStudentsCommand = mock(AddStudentsCommand.class);
+        commandRegistry.register("add student", addStudentsCommand);
         Command command = commandRegistry.getCommand("add student");
 
         command.execute();
 
-        verify(addStudentCommand).execute();
+        verify(addStudentsCommand).execute();
     }
 }

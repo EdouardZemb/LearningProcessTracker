@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class AddStudentCommand extends Command{
+public class AddStudentsCommand extends Command{
     private final InputProvider inputProvider;
 
-    public AddStudentCommand(OutputProvider outputProvider, InputProvider inputProvider) {
-        super(outputProvider, "add student");
+    public AddStudentsCommand(OutputProvider outputProvider, InputProvider inputProvider) {
+        super(outputProvider, "add students");
         this.inputProvider = inputProvider;
     }
 
