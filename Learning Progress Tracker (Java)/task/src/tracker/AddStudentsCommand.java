@@ -14,7 +14,7 @@ public class AddStudentsCommand extends Command{
 
     @Override
     public void execute() {
-        outputProvider.print("Enter student name or 'back' to return");
+        outputProvider.print("Enter student credentials or 'back' to return");
         String input;
         List<Student> studentList = new ArrayList<>();
 
