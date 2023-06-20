@@ -2,7 +2,6 @@ package tracker;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class AddStudentsCommand extends Command{
     private final InputProvider inputProvider;
@@ -25,31 +24,28 @@ public class AddStudentsCommand extends Command{
                 break;
             }
 
-            Pattern firstNamePattern = Pattern.compile("[a-zA-Z]+");
-            Pattern lastNamePattern = Pattern.compile("[a-zA-Z]+");
-            Pattern emailPattern = Pattern.compile("(.+)@(.+)");
+            String[] credentials = input.split(" ");
 
-            boolean hasCorrectFirstName = firstNamePattern.matcher(input).find();
-            boolean hasCorrectLastName = lastNamePattern.matcher(input).find();
-            boolean hasCorrectEmail = emailPattern.matcher(input).find();
-
-            if (input.split(" ").length < 3) {
+            if (credentials.length < 3) {
                 outputProvider.print("Incorrect credentials");
                 continue;
             }
 
+            String firstName = credentials[0];
+            String lastName = credentials[1];
+            String email = credentials[2];
 
-            if (!hasCorrectFirstName) {
+            if (!FirstName.isValid(firstName)) {
                 outputProvider.print("Incorrect first name");
                 continue;
             }
 
-            if (!hasCorrectLastName) {
+            if (!LastName.isValid(lastName)) {
                 outputProvider.print("Incorrect last name");
                 continue;
             }
 
-            if (!hasCorrectEmail) {
+            if (!Email.isValid(email)) {
                 outputProvider.print("Incorrect email");
                 continue;
             }
