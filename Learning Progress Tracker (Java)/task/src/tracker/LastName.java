@@ -1,13 +1,10 @@
 package tracker;
 
-public class LastName {
-    private final String lastName;
-
-    public LastName(String lastName) {
+public record LastName(String lastName) {
+    public LastName {
         if (!isValid(lastName)) {
             throw new IllegalArgumentException("Incorrect last name.");
         }
-        this.lastName = lastName;
     }
 
     static boolean isValid(String input) {

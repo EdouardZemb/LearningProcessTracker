@@ -1,12 +1,10 @@
 package tracker;
 
-public class Email {
-    String email;
-    public Email(String email) {
+public record Email(String email) {
+    public Email {
         if (!isValid(email)) {
             throw new IllegalArgumentException("Incorrect email.");
         }
-        this.email = email;
     }
 
     static boolean isValid(String input) {
