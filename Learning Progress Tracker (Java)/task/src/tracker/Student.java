@@ -2,6 +2,6 @@ package tracker;
 
 public class Student {
 
-    public Student() {
+    public Student(Credentials credentials) {
     }
 }

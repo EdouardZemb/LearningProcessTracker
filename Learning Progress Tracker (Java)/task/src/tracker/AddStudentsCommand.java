@@ -24,33 +24,16 @@ public class AddStudentsCommand extends Command{
                 break;
             }
 
-            String[] credentials = input.split(" ");
+            Credentials credentials;
 
-            if (credentials.length < 3) {
-                outputProvider.print("Incorrect credentials");
+            try {
+                credentials = CredentialsExtractor.extract(input);
+            } catch (IllegalArgumentException e) {
+                outputProvider.print(e.getMessage());
                 continue;
             }
 
-            String firstName = credentials[0];
-            String lastName = credentials[1];
-            String email = credentials[2];
-
-            if (!FirstName.isValid(firstName)) {
-                outputProvider.print("Incorrect first name");
-                continue;
-            }
-
-            if (!LastName.isValid(lastName)) {
-                outputProvider.print("Incorrect last name");
-                continue;
-            }
-
-            if (!Email.isValid(email)) {
-                outputProvider.print("Incorrect email");
-                continue;
-            }
-
-            studentList.add(new Student());
+            studentList.add(new Student(credentials));
 
             outputProvider.print("The student has been added");
         }

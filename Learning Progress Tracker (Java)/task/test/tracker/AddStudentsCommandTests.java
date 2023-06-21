@@ -38,7 +38,7 @@ public class AddStudentsCommandTests {
 
         addStudentsCommand.execute();
 
-        Mockito.verify(outputProvider).print("Enter student name or 'back' to return");
+        Mockito.verify(outputProvider).print("Enter student credentials or 'back' to return");
         Mockito.verify(outputProvider).print("The student has been added");
         Mockito.verify(outputProvider).print("Total 1 students have been added");
     }
@@ -67,8 +67,8 @@ public class AddStudentsCommandTests {
 
         addStudentsCommand.execute();
 
-        Mockito.verify(outputProvider).print("Enter student name or 'back' to return");
-        Mockito.verify(outputProvider).print("Incorrect credentials");
+        Mockito.verify(outputProvider).print("Enter student credentials or 'back' to return");
+        Mockito.verify(outputProvider).print("Incorrect credentials.");
         Mockito.verify(outputProvider).print("The student has been added");
         Mockito.verify(outputProvider).print("Total 1 students have been added");
 
