@@ -9,18 +9,21 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @DisplayName("CommandRegistry Tests")
 public class CommandRegistryTests {
     @Mock
     private OutputProvider outputProvider;
+    @Mock
+    private InputProvider inputProvider;
     private CommandRegistry commandRegistry;
     private AutoCloseable closeable;
 
     @BeforeEach
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        commandRegistry = new CommandRegistry(outputProvider);
+        commandRegistry = new CommandRegistry();
     }
 
     @AfterEach
@@ -31,6 +34,7 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("getCommand() returns the correct command for a registered input")
     void testGetCommandReturnsCorrectCommandForRegisteredInput() {
+        commandRegistry.register("exit", new ExitCommand(outputProvider));
         Command command = commandRegistry.getCommand("exit");
 
         assertNotNull(command);
@@ -43,5 +47,34 @@ public class CommandRegistryTests {
         Command command = commandRegistry.getCommand("unknown");
 
         assertNull(command);
+    }
+
+    @Test
+    @DisplayName("getCommand() returns AddStudentCommand for 'add student'")
+    void testGetCommandReturnsAddStudentCommand() {
+        commandRegistry.register("add student", new AddStudentsCommand(outputProvider, inputProvider));
+        Command command = commandRegistry.getCommand("add student");
+
+        assertNotNull(command);
+        assertTrue(command instanceof AddStudentsCommand);
+    }
+
+    @Test
+    @DisplayName("getCommand() returns null for unrecognized command")
+    void testGetCommandReturnsNullForUnrecognizedCommand() {
+        Command command = commandRegistry.getCommand("invalid command");
+        assertNull(command);
+    }
+
+    @Test
+    @DisplayName("execute() calls execute() method of AddStudentCommand")
+    void testExecuteCallsExecuteMethodOfAddStudentCommand() {
+        AddStudentsCommand addStudentsCommand = mock(AddStudentsCommand.class);
+        commandRegistry.register("add student", addStudentsCommand);
+        Command command = commandRegistry.getCommand("add student");
+
+        command.execute();
+
+        verify(addStudentsCommand).execute();
     }
 }

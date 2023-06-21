@@ -11,20 +11,21 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
 
 @DisplayName("UserInputHandler Tests")
-public class UserInputHandlerTests {
+public class DefaultUserInputHandlerTests {
     @Mock
     private OutputProvider outputProvider;
     @Mock
     private InputProvider inputProvider;
     private AutoCloseable closeable;
-    private UserInputHandler userInputHandler;
+    private DefaultUserInputHandler defaultUserInputHandler;
 
     @BeforeEach
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        CommandRegistry commandRegistry = new CommandRegistry(outputProvider);
+        CommandRegistry commandRegistry = new CommandRegistry();
+        commandRegistry.register("exit", new ExitCommand(outputProvider));
         CommandExecutor commandExecutor = new DefaultCommandExecutor(outputProvider);
-        userInputHandler = new UserInputHandler(inputProvider, commandRegistry, commandExecutor);
+        defaultUserInputHandler = new DefaultUserInputHandler(inputProvider, commandRegistry, commandExecutor);
     }
 
     @AfterEach
@@ -37,7 +38,7 @@ public class UserInputHandlerTests {
     void testHandleUserInputExitsWhenExitCommandEntered() {
         when(inputProvider.getInput()).thenReturn("command1", "command2", "exit");
 
-        userInputHandler.handleUserInput();
+        defaultUserInputHandler.handleUserInput();
 
         verify(outputProvider).print("Bye!");
         verify(inputProvider, times(3)).getInput();
@@ -48,7 +49,7 @@ public class UserInputHandlerTests {
     void testHandleUserInputPrintsNoInputForBlankInput() {
         when(inputProvider.getInput()).thenReturn("", "exit");
 
-        userInputHandler.handleUserInput();
+        defaultUserInputHandler.handleUserInput();
 
         verify(outputProvider).print("No input.");
         verify(outputProvider).print("Bye!");

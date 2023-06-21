@@ -2,7 +2,7 @@ package tracker;
 
 public class ExitCommand extends Command {
     public ExitCommand(OutputProvider outputProvider) {
-        super(outputProvider);
+        super(outputProvider, "exit");
     }
 
     @Override

@@ -22,10 +22,11 @@ public class LearningProgressTrackerAppTests {
     @BeforeEach
     void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        CommandRegistry commandRegistry = new CommandRegistry(outputProvider);
+        CommandRegistry commandRegistry = new CommandRegistry();
+        commandRegistry.register("exit", new ExitCommand(outputProvider));
         CommandExecutor commandExecutor = new DefaultCommandExecutor(outputProvider);
-        UserInputHandler userInputHandler = new UserInputHandler(inputProvider, commandRegistry, commandExecutor);
-        app = new LearningProgressTrackerApp(outputProvider, userInputHandler);
+        DefaultUserInputHandler defaultUserInputHandler = new DefaultUserInputHandler(inputProvider, commandRegistry, commandExecutor);
+        app = new LearningProgressTrackerApp(outputProvider, defaultUserInputHandler);
     }
 
     @AfterEach

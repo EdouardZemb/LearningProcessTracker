@@ -1,35 +1,11 @@
 package tracker;
 
-public class UserInputHandler {
-    private final InputProvider inputProvider;
-    private final CommandRegistry commandRegistry;
-    private final CommandExecutor commandExecutor;
+public interface UserInputHandler {
+    void handleUserInput();
 
-    public UserInputHandler(InputProvider inputProvider, CommandRegistry commandRegistry, CommandExecutor commandExecutor) {
-        this.inputProvider = inputProvider;
-        this.commandRegistry = commandRegistry;
-        this.commandExecutor = commandExecutor;
-    }
+    void handleBlankInput();
 
-    public void handleUserInput() {
-        while (true) {
-            String input = inputProvider.getInput();
+    void handleUnrecognizedInput();
 
-            if (input.isBlank()) {
-                commandExecutor.handleBlankInput();
-                continue;
-            }
-
-            Command command = commandRegistry.getCommand(input);
-            if (command != null) {
-                try {
-                    commandExecutor.executeCommand(command);
-                } catch (ExitProgramException e) {
-                    break;
-                }
-            } else {
-                commandExecutor.handleUnrecognizedCommand();
-            }
-        }
-    }
+    String getInput();
 }
