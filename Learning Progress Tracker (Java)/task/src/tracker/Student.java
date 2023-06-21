@@ -1,7 +1,13 @@
 package tracker;
 
-public class Student {
+public record Student(Credentials credentials) {
+    public Student {
+        if (!isValid(credentials)) {
+            throw new IllegalArgumentException("Incorrect student credentials.");
+        }
+    }
 
-    public Student(Credentials credentials) {
+    static boolean isValid(Credentials credentials) {
+        return credentials != null;
     }
 }
