@@ -21,7 +21,7 @@ public class AddStudentsCommandTests {
     @BeforeEach
     public void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        addStudentsCommand = new AddStudentsCommand(outputProvider, inputProvider);
+        addStudentsCommand = new AddStudentsCommand(outputProvider, inputProvider, new StudentRepository());
     }
 
     @AfterEach

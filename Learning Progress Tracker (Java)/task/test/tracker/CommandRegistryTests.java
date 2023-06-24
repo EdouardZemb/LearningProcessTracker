@@ -52,7 +52,7 @@ public class CommandRegistryTests {
     @Test
     @DisplayName("getCommand() returns AddStudentCommand for 'add student'")
     void testGetCommandReturnsAddStudentCommand() {
-        commandRegistry.register("add student", new AddStudentsCommand(outputProvider, inputProvider));
+        commandRegistry.register("add student", new AddStudentsCommand(outputProvider, inputProvider, new StudentRepository()));
         Command command = commandRegistry.getCommand("add student");
 
         assertNotNull(command);
