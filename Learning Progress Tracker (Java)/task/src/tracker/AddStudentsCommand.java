@@ -2,6 +2,7 @@ package tracker;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class AddStudentsCommand extends Command{
     private final InputProvider inputProvider;
@@ -30,6 +31,16 @@ public class AddStudentsCommand extends Command{
                 credentials = CredentialsExtractor.extract(input);
             } catch (IllegalArgumentException e) {
                 outputProvider.print(e.getMessage());
+                continue;
+            }
+
+            // fetches all emails in studentList
+            Set<Email> emailSet = studentList.stream()
+                    .map(Student::getEmail)
+                    .collect(Collectors.toSet());
+
+            if (emailSet.contains(credentials.email())) {
+                outputProvider.print("This email is already taken.");
                 continue;
             }
 

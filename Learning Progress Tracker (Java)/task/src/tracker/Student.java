@@ -13,6 +13,10 @@ public record Student(Credentials credentials) {
         return credentials != null;
     }
 
+    public Email getEmail() {
+        return credentials.email();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
