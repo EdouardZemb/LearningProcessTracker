@@ -1,7 +1,7 @@
 package tracker;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class AddStudentsCommand extends Command{
     private final InputProvider inputProvider;
@@ -15,7 +15,7 @@ public class AddStudentsCommand extends Command{
     public void execute() {
         outputProvider.print("Enter student credentials or 'back' to return");
         String input;
-        List<Student> studentList = new ArrayList<>();
+        Set<Student> studentList = new HashSet<>();
 
         while (true) {
             input = inputProvider.getInput();
