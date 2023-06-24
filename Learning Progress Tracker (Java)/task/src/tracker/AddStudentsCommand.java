@@ -16,7 +16,7 @@ public class AddStudentsCommand extends Command{
     public void execute() {
         outputProvider.print("Enter student credentials or 'back' to return");
         String input;
-        Set<Student> studentList = new HashSet<>();
+        Set<Student> students = new HashSet<>();
 
         while (true) {
             input = inputProvider.getInput();
@@ -34,8 +34,8 @@ public class AddStudentsCommand extends Command{
                 continue;
             }
 
-            // fetches all emails in studentList
-            Set<Email> emailSet = studentList.stream()
+            // fetches all emails in students
+            Set<Email> emailSet = students.stream()
                     .map(Student::getEmail)
                     .collect(Collectors.toSet());
 
@@ -44,11 +44,11 @@ public class AddStudentsCommand extends Command{
                 continue;
             }
 
-            studentList.add(new Student(credentials));
+            students.add(new Student(credentials));
 
             outputProvider.print("The student has been added");
         }
 
-        outputProvider.print("Total " + studentList.size() + " students have been added");
+        outputProvider.print("Total " + students.size() + " students have been added");
     }
 }
