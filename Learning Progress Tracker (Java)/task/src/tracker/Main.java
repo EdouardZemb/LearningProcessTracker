@@ -20,11 +20,14 @@ public class Main {
         CommandRegistry addStudentCommandRegistry = new CommandRegistry();
         Command backCommand = new BackCommand(outputProvider);
         backCommand.register(addStudentCommandRegistry);
-        Command addStudentCommand = new AddStudentsCommand(outputProvider, inputProvider, new StudentRepository());
+        StudentRepository studentRepository = new StudentRepository();
+        Command addStudentCommand = new AddStudentsCommand(outputProvider, inputProvider, studentRepository);
         Command exitCommand = new ExitCommand(outputProvider);
+        Command listCommand = new ListCommand(outputProvider, studentRepository);
         Command UnhandledBackCommand = new UnhandledBackCommand(outputProvider);
         addStudentCommand.register(commandRegistry);
         exitCommand.register(commandRegistry);
+        listCommand.register(commandRegistry);
         UnhandledBackCommand.register(commandRegistry);
     }
 
