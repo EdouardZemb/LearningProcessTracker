@@ -22,22 +22,14 @@ public class AddStudentsCommand extends Command {
                 break;
             }
 
-            Credentials credentials;
-
             try {
-                credentials = CredentialsExtractor.extract(input);
+                Credentials credentials = CredentialsExtractor.extract(input);
+                studentRepository.addStudent(credentials);
             } catch (IllegalArgumentException e) {
                 outputProvider.print(e.getMessage());
                 continue;
             }
 
-            if (studentRepository.isEmailTaken(credentials.email())) {
-                outputProvider.print("This email is already taken.");
-                continue;
-            }
-
-            Student student = new Student(credentials);
-            studentRepository.addStudent(student);
             outputProvider.print("The student has been added");
         }
 

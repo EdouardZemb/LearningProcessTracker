@@ -1,13 +1,12 @@
 package tracker;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class StudentRepository {
-    private final Set<Student> students;
+    private final LinkedList<Student> students;
 
     public StudentRepository() {
-        this.students = new HashSet<>();
+        this.students = new LinkedList<>();
     }
 
     public boolean isEmailTaken(Email email) {
@@ -15,7 +14,13 @@ public class StudentRepository {
                 .anyMatch(student -> student.getEmail().equals(email));
     }
 
-    public void addStudent(Student student) {
+    public void addStudent(Credentials credentials) {
+        if (isEmailTaken(credentials.email())) {
+            throw new IllegalArgumentException("This email is already taken.");
+        }
+
+        int id = students.size() > 0 ? students.getLast().id() + 1 : 1;
+        Student student = new Student(credentials, id);
         students.add(student);
     }
 
