@@ -15,12 +15,12 @@ public class StudentTests {
                 new LastName("Smith"),
                 new Email("example@example.com")
         );
-        Assertions.assertDoesNotThrow(() -> new Student(validCredentials));
+        Assertions.assertDoesNotThrow(() -> new Student(validCredentials, 1));
     }
 
     @Test
     @DisplayName("Test Invalid Student")
     public void testInvalidStudent() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new Student(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Student(null, 1));
     }
 }
