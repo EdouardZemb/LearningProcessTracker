@@ -9,6 +9,11 @@ public class ListCommand extends Command{
 
     @Override
     public void execute() {
+        if (studentRepository.getStudentCount() == 0) {
+            outputProvider.print("No students found.");
+            return;
+        }
+
         outputProvider.print("Students:");
         for (Student student : studentRepository.getAllStudents()) {
             outputProvider.print(String.valueOf(student.id()));
