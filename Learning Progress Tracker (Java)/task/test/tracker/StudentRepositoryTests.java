@@ -1,6 +1,8 @@
 package tracker;
 import org.junit.jupiter.api.*;
-import java.util.Set;
+
+import java.util.Collection;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("StudentRepository Tests")
@@ -60,7 +62,7 @@ public class StudentRepositoryTests {
         repository.addStudent(credentialsStudent2);
 
         // Act
-        Set<Student> allStudents = repository.getAllStudents();
+        Collection<Student> allStudents = repository.getStudents();
 
         // Assert
         assertEquals(2, allStudents.size());

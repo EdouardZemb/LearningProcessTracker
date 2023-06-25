@@ -24,9 +24,8 @@ public class StudentRepository {
         students.add(student);
     }
 
-    @SuppressWarnings("unused")
-    public Set<Student> getAllStudents() {
-        return new HashSet<>(students);
+    public Collection<Student> getStudents() {
+        return new LinkedHashSet<>(students);
     }
 
     public int getStudentCount() {
