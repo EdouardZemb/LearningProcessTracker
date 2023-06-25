@@ -1,30 +1,32 @@
 package tracker;
 import org.junit.jupiter.api.*;
-import java.util.Set;
+
+import java.util.Collection;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("StudentRepository Tests")
 public class StudentRepositoryTests {
-    private Student student1;
+    private Credentials credentialsStudent1;
 
-    private Student student2;
+    private Credentials credentialsStudent2;
     private StudentRepository repository;
 
     @BeforeEach
     public void setup() {
         repository = new StudentRepository();
-        student1 = new Student(new Credentials(new FirstName("John"), new LastName("Doe"), new Email("john.doe@example.com")));
-        student2 = new Student(new Credentials(new FirstName("Jane"),new LastName("Smith"), new Email("jane.smith@example.com")));
+        credentialsStudent1 = new Credentials(new FirstName("John"), new LastName("Doe"), new Email("john.doe@example.com"));
+        credentialsStudent2 = new Credentials(new FirstName("Jane"),new LastName("Smith"), new Email("jane.smith@example.com"));
     }
 
     @Test
     @DisplayName("Test adding a student")
     public void testAddStudent() {
         // Act
-        repository.addStudent(student1);
+        repository.addStudent(credentialsStudent1);
 
         // Assert
-        assertTrue(repository.isEmailTaken(student1.getEmail()));
+        assertTrue(repository.isEmailTaken(credentialsStudent1.email()));
         assertEquals(1, repository.getStudentCount());
     }
 
@@ -32,12 +34,12 @@ public class StudentRepositoryTests {
     @DisplayName("Test adding multiple students")
     public void testAddMultipleStudents() {
         // Act
-        repository.addStudent(student1);
-        repository.addStudent(student2);
+        repository.addStudent(credentialsStudent1);
+        repository.addStudent(credentialsStudent2);
 
         // Assert
-        assertTrue(repository.isEmailTaken(student1.getEmail()));
-        assertTrue(repository.isEmailTaken(student2.getEmail()));
+        assertTrue(repository.isEmailTaken(credentialsStudent1.email()));
+        assertTrue(repository.isEmailTaken(credentialsStudent2.email()));
         assertEquals(2, repository.getStudentCount());
     }
 
@@ -45,10 +47,10 @@ public class StudentRepositoryTests {
     @DisplayName("Test checking email availability")
     public void testIsEmailTaken() {
         // Arrange
-        repository.addStudent(student1);
+        repository.addStudent(credentialsStudent1);
 
         // Assert
-        assertTrue(repository.isEmailTaken(student1.getEmail()));
+        assertTrue(repository.isEmailTaken(credentialsStudent1.email()));
         assertFalse(repository.isEmailTaken(new Email("invalid@example.com")));
     }
 
@@ -56,24 +58,24 @@ public class StudentRepositoryTests {
     @DisplayName("Test getting all students")
     public void testGetAllStudents() {
         // Arrange
-        repository.addStudent(student1);
-        repository.addStudent(student2);
+        repository.addStudent(credentialsStudent1);
+        repository.addStudent(credentialsStudent2);
 
         // Act
-        Set<Student> allStudents = repository.getAllStudents();
+        Collection<Student> allStudents = repository.getStudents();
 
         // Assert
         assertEquals(2, allStudents.size());
-        assertTrue(allStudents.contains(student1));
-        assertTrue(allStudents.contains(student2));
+        assertTrue(allStudents.contains(new Student(credentialsStudent1, 1)));
+        assertTrue(allStudents.contains(new Student(credentialsStudent2, 2)));
     }
 
     @Test
     @DisplayName("Test getting student count")
     public void testGetStudentCount() {
         // Arrange
-        repository.addStudent(student1);
-        repository.addStudent(student2);
+        repository.addStudent(credentialsStudent1);
+        repository.addStudent(credentialsStudent2);
 
         // Act
         int studentCount = repository.getStudentCount();

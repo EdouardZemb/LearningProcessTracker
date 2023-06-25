@@ -2,7 +2,8 @@ package tracker;
 
 import java.util.Objects;
 
-public record Student(Credentials credentials) {
+public record Student(Credentials credentials, int id) {
+
     public Student {
         if (!isValid(credentials)) {
             throw new IllegalArgumentException("Incorrect student credentials.");
