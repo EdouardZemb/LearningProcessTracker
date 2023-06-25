@@ -8,20 +8,26 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-@DisplayName("AddStudentCommand Tests")
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+@DisplayName("AddStudentsCommand Tests")
 public class AddStudentsCommandTests {
 
     @Mock
     private OutputProvider outputProvider;
     @Mock
     private InputProvider inputProvider;
+    @Mock
+    private StudentRepository studentRepository;
     private AddStudentsCommand addStudentsCommand;
-    AutoCloseable closeable;
+    private AutoCloseable closeable;
 
     @BeforeEach
     public void setup() {
         closeable = MockitoAnnotations.openMocks(this);
-        addStudentsCommand = new AddStudentsCommand(outputProvider, inputProvider, new StudentRepository());
+        addStudentsCommand = new AddStudentsCommand(outputProvider, inputProvider, studentRepository);
     }
 
     @AfterEach
@@ -30,48 +36,94 @@ public class AddStudentsCommandTests {
     }
 
     @Test
-    @DisplayName("Test executing AddStudentCommand to add a single student")
+    @DisplayName("Test executing AddStudentsCommand to add a single student")
     public void testExecuteAddSingleStudent() {
-        Mockito.when(inputProvider.getInput())
+        when(inputProvider.getInput())
                 .thenReturn("John Doe john.doe@example.com")
                 .thenReturn("back");
 
+        when(studentRepository.isEmailTaken(new Email("john.doe@example.com")))
+                .thenReturn(false);
+
+        when(studentRepository.getStudentCount())
+                .thenReturn(1);
+
         addStudentsCommand.execute();
 
-        Mockito.verify(outputProvider).print("Enter student credentials or 'back' to return");
-        Mockito.verify(outputProvider).print("The student has been added");
-        Mockito.verify(outputProvider).print("Total 1 students have been added");
+        verify(outputProvider).print("Enter student credentials or 'back' to return");
+        verify(outputProvider).print("The student has been added");
+        verify(outputProvider).print("Total 1 students have been added");
     }
 
     @Test
-    @DisplayName("Test executing AddStudentCommand to add multiple students")
+    @DisplayName("Test executing AddStudentsCommand to add multiple students")
     public void testExecuteAddMultipleStudents() {
-        Mockito.when(inputProvider.getInput())
+        when(inputProvider.getInput())
                 .thenReturn("John Doe john.doe@example.com")
                 .thenReturn("Jane Smith jane.smith@example.com")
                 .thenReturn("back");
 
+        when(studentRepository.isEmailTaken(new Email("john.doe@example.com")))
+                .thenReturn(false);
+        when(studentRepository.isEmailTaken(new Email("jane.smith@example.com")))
+                .thenReturn(false);
+
+        when(studentRepository.getStudentCount())
+                .thenReturn(2);
+
         addStudentsCommand.execute();
 
-        Mockito.verify(outputProvider, Mockito.times(2)).print("The student has been added");
-        Mockito.verify(outputProvider).print("Total 2 students have been added");
+        verify(outputProvider, Mockito.times(2)).print("The student has been added");
+        verify(outputProvider).print("Total 2 students have been added");
     }
 
     @Test
-    @DisplayName("Test executing AddStudentCommand with invalid input")
+    @DisplayName("Test executing AddStudentsCommand with invalid input")
     public void testExecuteInvalidInput() {
-        Mockito.when(inputProvider.getInput())
+        when(inputProvider.getInput())
                 .thenReturn("Invalid")
                 .thenReturn("John Doe john.doe@example.com")
                 .thenReturn("back");
 
+        when(studentRepository.isEmailTaken(new Email("john.doe@example.com")))
+                .thenReturn(false);
+
+        when(studentRepository.getStudentCount())
+                .thenReturn(1);
+
         addStudentsCommand.execute();
 
-        Mockito.verify(outputProvider).print("Enter student credentials or 'back' to return");
-        Mockito.verify(outputProvider).print("Incorrect credentials.");
-        Mockito.verify(outputProvider).print("The student has been added");
-        Mockito.verify(outputProvider).print("Total 1 students have been added");
+        verify(outputProvider).print("Enter student credentials or 'back' to return");
+        verify(outputProvider).print("Incorrect credentials.");
+        verify(outputProvider).print("The student has been added");
+        verify(outputProvider).print("Total 1 students have been added");
 
-        Mockito.verifyNoMoreInteractions(outputProvider);
+        verifyNoMoreInteractions(outputProvider);
+    }
+
+    @Test
+    @DisplayName("Test executing AddStudentsCommand with duplicate email")
+    public void testExecuteDuplicateEmail() {
+        when(inputProvider.getInput())
+                .thenReturn("John Doe john.doe@example.com")
+                .thenReturn("Jane Smith john.doe@example.com") // Duplicate email
+                .thenReturn("back");
+
+        when(studentRepository.isEmailTaken(new Email("john.doe@example.com")))
+                .thenReturn(false) // First email is not taken
+                .thenReturn(true); // Second email is taken
+
+        when(studentRepository.getStudentCount())
+                .thenReturn(1);
+
+        addStudentsCommand.execute();
+
+        verify(outputProvider).print("Enter student credentials or 'back' to return");
+        verify(outputProvider).print("The student has been added");
+        verify(outputProvider).print("This email is already taken.");
+        verify(outputProvider).print("Total 1 students have been added");
+
+        verifyNoMoreInteractions(outputProvider);
+        verify(studentRepository).addStudent(Mockito.any(Student.class));
     }
 }
