@@ -16,7 +16,7 @@ public class ListCommand extends Command{
 
         outputProvider.print("Students:");
         for (Student student : studentRepository.getStudents()) {
-            outputProvider.print(String.valueOf(student.id()));
+            outputProvider.print(String.valueOf(student.getId()));
         }
     }
 }
