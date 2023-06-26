@@ -24,7 +24,8 @@ public class Main {
         Command addStudentCommand = new AddStudentsCommand(outputProvider, inputProvider, studentRepository);
         Command exitCommand = new ExitCommand(outputProvider);
         Command listCommand = new ListCommand(outputProvider, studentRepository);
-        Command addPointsCommand = new AddPointsCommand(outputProvider, inputProvider, studentRepository);
+        PointsInputHandler pointsInputHandler = new PointsInputHandler(inputProvider, outputProvider, studentRepository);
+        Command addPointsCommand = new AddPointsCommand(outputProvider, pointsInputHandler);
         Command UnhandledBackCommand = new UnhandledBackCommand(outputProvider);
         addStudentCommand.register(commandRegistry);
         exitCommand.register(commandRegistry);

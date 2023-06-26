@@ -36,7 +36,7 @@ public class StudentRepository {
         return this.students.stream()
                 .filter(student -> student.getId() == i)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No student is found for getId=" + i + "."));
+                .orElseThrow(() -> new IllegalArgumentException("No student is found for id=" + i + "."));
     }
 
     public void setStudentPoints(int id, Map<String, Integer> points) {
