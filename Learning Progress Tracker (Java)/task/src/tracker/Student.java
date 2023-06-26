@@ -1,13 +1,21 @@
 package tracker;
 
+import java.util.Map;
 import java.util.Objects;
 
-public record Student(Credentials credentials, int id) {
+public final class Student {
+    private final Credentials credentials;
+    private final int id;
+    @SuppressWarnings("unused, FieldCanBeLocal")
+    private Map<String, Integer> points;
 
-    public Student {
+
+    public Student(Credentials credentials, int id) {
         if (!isValid(credentials)) {
-            throw new IllegalArgumentException("Incorrect student credentials.");
+            throw new IllegalArgumentException("Incorrect student getCredentials.");
         }
+        this.credentials = credentials;
+        this.id = id;
     }
 
     static boolean isValid(Credentials credentials) {
@@ -16,6 +24,18 @@ public record Student(Credentials credentials, int id) {
 
     public Email getEmail() {
         return credentials.email();
+    }
+
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setPoints(Map<String, Integer> points) {
+        this.points = points;
     }
 
     @Override
@@ -30,4 +50,14 @@ public record Student(Credentials credentials, int id) {
     public int hashCode() {
         return Objects.hash(credentials);
     }
+
+
+
+    @Override
+    public String toString() {
+        return "Student[" +
+                "getCredentials=" + credentials + ", " +
+                "getId=" + id + ']';
+    }
+
 }
