@@ -1,13 +1,13 @@
 package tracker;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Objects;
 
 public final class Student {
     private final Credentials credentials;
     private final int id;
     @SuppressWarnings("unused, FieldCanBeLocal")
-    private Map<String, Integer> points;
+    private List<Point> points;
 
 
     public Student(Credentials credentials, int id) {
@@ -34,7 +34,7 @@ public final class Student {
         return id;
     }
 
-    public void setPoints(Map<String, Integer> points) {
+    public void setPoints(List<Point> points) {
         this.points = points;
     }
 
@@ -60,4 +60,7 @@ public final class Student {
                 "getId=" + id + ']';
     }
 
+    public List<Point> getPoints() {
+        return points;
+    }
 }
