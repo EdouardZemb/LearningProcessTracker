@@ -2,7 +2,6 @@ package tracker;
 
 public class Main {
     private final OutputProvider outputProvider;
-
     private final InputProvider inputProvider;
     private final CommandRegistry commandRegistry;
     private final LearningProgressTrackerApp app;
@@ -26,11 +25,13 @@ public class Main {
         Command listCommand = new ListCommand(outputProvider, studentRepository);
         PointsInputHandler pointsInputHandler = new PointsInputHandler(inputProvider, outputProvider, studentRepository);
         Command addPointsCommand = new AddPointsCommand(outputProvider, pointsInputHandler);
+        Command findCommand = new FindCommand(outputProvider, inputProvider, studentRepository);
         Command UnhandledBackCommand = new UnhandledBackCommand(outputProvider);
         addStudentCommand.register(commandRegistry);
         exitCommand.register(commandRegistry);
         listCommand.register(commandRegistry);
         addPointsCommand.register(commandRegistry);
+        findCommand.register(commandRegistry);
         UnhandledBackCommand.register(commandRegistry);
     }
 
