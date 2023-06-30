@@ -1,17 +1,15 @@
 package tracker;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PointsValidator {
-    private final OutputProvider outputProvider;
     private final Pattern pointsPattern;
     private final String[] courses;
 
-    public PointsValidator(OutputProvider outputProvider) {
-        this.outputProvider = outputProvider;
+    public PointsValidator() {
         this.pointsPattern = Pattern.compile("^\\d+$");
         this.courses = new String[]{"Java", "DSA", "Databases", "Spring"};
     }
@@ -20,26 +18,24 @@ public class PointsValidator {
         Matcher matcher = pointsPattern.matcher(input);
 
         if (!matcher.find()) {
-            outputProvider.print("Incorrect points format.");
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("No student is found for id=" + input + ".");
         }
 
         return Integer.parseInt(matcher.group());
     }
 
-    public Map<String, Integer> validateAndExtractPoints(String[] parts) {
-        Map<String, Integer> points = new HashMap<>();
+    public List<Point> validateAndExtractPoints(String[] parts) {
+        List<Point> points = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
             Matcher matcher = pointsPattern.matcher(parts[i + 1]);
 
             if (!matcher.find()) {
-                outputProvider.print("Incorrect points format.");
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Incorrect points format.");
             }
 
             int point = Integer.parseInt(matcher.group());
-            points.put(courses[i], point);
+            points.add(new Point(courses[i], point));
         }
 
         return points;

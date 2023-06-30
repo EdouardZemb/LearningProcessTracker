@@ -1,6 +1,6 @@
 package tracker;
 
-import java.util.Map;
+import java.util.List;
 
 public class PointsInputHandler {
     private final InputProvider inputProvider;
@@ -13,7 +13,7 @@ public class PointsInputHandler {
         this.inputProvider = inputProvider;
         this.outputProvider = outputProvider;
         this.studentRepository = studentRepository;
-        this.pointsValidator = new PointsValidator(outputProvider);
+        this.pointsValidator = new PointsValidator();
         this.pointsUpdater = new PointsUpdater();
     }
 
@@ -32,11 +32,10 @@ public class PointsInputHandler {
                 continue;
             }
 
-            int id = pointsValidator.extractId(parts[0]);
-
             try {
+                int id = pointsValidator.extractId(parts[0]);
                 studentRepository.getStudentById(id);
-                Map<String, Integer> points = pointsValidator.validateAndExtractPoints(parts);
+                List<Point> points = pointsValidator.validateAndExtractPoints(parts);
                 pointsUpdater.updateStudentPoints(studentRepository, id, points);
                 outputProvider.print("Points updated.");
             } catch (IllegalArgumentException e) {

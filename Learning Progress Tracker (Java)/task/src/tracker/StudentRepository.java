@@ -39,7 +39,7 @@ public class StudentRepository {
                 .orElseThrow(() -> new IllegalArgumentException("No student is found for id=" + i + "."));
     }
 
-    public void setStudentPoints(int id, Map<String, Integer> points) {
+    public void setStudentPoints(int id, List<Point> points) {
         Student student = getStudentById(id);
         student.setPoints(points);
     }
